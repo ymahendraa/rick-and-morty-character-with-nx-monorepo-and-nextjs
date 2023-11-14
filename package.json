@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@nx/next": "17.1.1",
     "@tanstack/react-query": "^5.4.3",
     "axios": "^1.6.1",

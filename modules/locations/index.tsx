@@ -25,25 +25,33 @@ const LocationModule = (): ReactElement => {
   }, [setNameLocations, setRecoilLocations])
 
   return (
-    <div>
-      <Container>
-        <h1 className='mt-3 mb-4'>List of Locations</h1>
+    <div className="flex justify-center min-h-screen">
+      <div className='flex flex-col w-full sm:w-3/4 max-w-screen-xl'>
+        <h1 className='text-md font-medium mt-5 text-center'>List of Locations</h1>
 
-        {getNameLocations?.map((location, index) => (
-          <Link
-            href={`/location/${location}`}
-            key={index}
-          >
-            <Card
+        <div className='flex flex-wrap gap-4 mt-4 p-2'>
+          {getNameLocations?.map((location, index) => (
+            <Link
+              href={`/location/${location}`}
               key={index}
-              className='m-2 p-3 bg-light'
-              style={{ minWidth: '200px' }}
+              style={{
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
             >
-              {location}
-            </Card>
-          </Link>
-        ))}
-      </Container>
+              <div
+                key={index}
+                className='flex justify-center border rounded-lg cursor-pointer p-2 bg-white border-4 border-blue-300 hover:border-blue-500 hover:bg-blue-100'
+
+              >
+                <p className="text-md font-bold text-black">
+                  {location}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

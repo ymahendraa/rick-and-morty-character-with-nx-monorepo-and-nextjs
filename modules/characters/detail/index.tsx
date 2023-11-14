@@ -6,7 +6,8 @@ import { TLocations } from 'types/location'
 import { type } from 'os'
 import React, { useState, useEffect } from 'react'
 import { ReactElement } from 'react'
-import { Container, Row, Col, Card, Modal, Form, Button } from 'react-bootstrap'
+import { Dialog } from '@headlessui/react'
+import Modal from 'components/Modal'
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
 
@@ -95,15 +96,16 @@ const DetailCharacterModule = ({ params }: Props) => {
       return [...oldNameLocations, location]
     })
 
+
     handleModalClose()
   }
 
   return (
     <div className='flex flex-col items-center h-screen'>
       <h1 className='my-4 text-black font-bold text-lg'>Character Details</h1>
-      <div className='border rounded-xl sm:w-2/4'>
-        <div className='flex sm:flex-col'>
-          <div className='sm:w-2/3'>
+      <div className='border rounded-xl w-3/4 sm:w-1/4'>
+        <div className='flex flex-col'>
+          <div className='w-full'>
             <Image
               src={data?.image as string}
               width='0'
@@ -112,12 +114,12 @@ const DetailCharacterModule = ({ params }: Props) => {
               style={{
                 objectFit: 'cover',
                 objectPosition: 'center',
-                borderRadius: '0.5rem 0 0 0.5rem',
+                borderRadius: '0.5rem 0.5rem 0 0',
               }}
               layout="responsive"
             />
           </div>
-          <div className='flex flex-col p-4 sm:gap-y-4 sm:w-1/3 justify-between'>
+          <div className='flex flex-col p-4 sm:gap-y-4 sm:w-full justify-between'>
             <div className='flex flex-col gap-1 sm:gap-4'>
               <p className='sm:text-2xl font-bold'>{data?.name}</p>
               <div className='flex flex-col'>
@@ -125,6 +127,7 @@ const DetailCharacterModule = ({ params }: Props) => {
                 <p className='text-sm sm:text-lg'><b>Species: </b> {data?.species}</p>
                 <p className='text-sm sm:text-lg'><b>Type: </b>{data?.type}</p>
                 <p className='text-sm sm:text-lg'><b>Gender: </b> {data?.gender}</p>
+                <p className='text-sm sm:text-lg'><b>Location: </b> {data?.location.name}</p>
               </div>
             </div>
             <button
@@ -137,39 +140,36 @@ const DetailCharacterModule = ({ params }: Props) => {
         </div>
       </div>
 
-      <Modal
-        show={showModal}
-        onHide={handleModalClose}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Add Location</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Location</Form.Label>
-            <Form.Control
+      <Modal show={showModal} onClose={handleModalClose} title='Add Location'>
+        <div className="flex flex-col mt-2 gap-y-3" >
+          <div className="flex flex-col">
+            <label>Location</label>
+            <input
               type='text'
               placeholder='Enter new location'
               value={location}
+              className='border rounded-lg p-2'
               onChange={handleLocationChange}
             />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant='secondary'
-            onClick={handleModalClose}
-          >
-            Close
-          </Button>
-          <Button
-            variant='primary'
-            onClick={handleModalSave}
-          >
-            Save
-          </Button>
-        </Modal.Footer>
+          </div>
+          <div className="flex gap-x-4 justify-end">
+            <button
+              onClick={handleModalClose}
+              className='bg-red-500 hover:bg-red-700 text-white text-sm sm:text-md sm:font-medium py-2 sm:py-1 px-5 sm:px-4 rounded-lg'
+            >
+              Close
+            </button>
+            <button
+              onClick={handleModalSave}
+              className='bg-blue-500 hover:bg-blue-700 text-white text-sm sm:text-md sm:font-medium py-2 sm:py-1 px-5 sm:px-4 rounded-lg'
+            >
+              Save
+            </button>
+          </div>
+        </div>
       </Modal>
+
+
     </div>
   )
 }

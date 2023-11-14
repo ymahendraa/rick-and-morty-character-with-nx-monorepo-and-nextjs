@@ -31,13 +31,13 @@ const DetailLocationModule = ({ params }: Props): ReactElement => {
   }, [set])
 
   return (
-    <Container>
-      <h1 className='mt-5 text-center'>Character Cards</h1>
-      <Row className='mt-4'>
+    <div className='flex flex-col w-full sm:w-3/4 max-w-screen-xl min-h-screen'>
+      <h1 className='text-md font-medium mt-5 text-center'>Character Cards</h1>
+      <div className='flex flex-wrap flex-1'>
         {filteredLocations?.map((character) => (
-          <Col
+          <div
             key={character.id}
-            md={4}
+            className='flex flex-col w-1/2 sm:w-1/3 md:w-1/4 lg:w-2/8 p-2 rounded-lg '
           >
             <Link
               href={`character/${character.id}`}
@@ -46,32 +46,34 @@ const DetailLocationModule = ({ params }: Props): ReactElement => {
                 color: 'inherit',
               }}
             >
-              <Card className='mb-3'>
+              <div className='border rounded-lg '>
                 <Image
                   src={character.image as string}
                   width='0'
                   height='0'
                   alt={character.name as string}
+                  style={{
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    borderRadius: '0.5rem 0.5rem 0 0',
+                  }}
                   layout="responsive"
                 />
-                <Card.Body>
-                  <Card.Title>{character.name}</Card.Title>
-                  <Card.Text>
-                    <strong>Status:</strong> {character.status}
-                    <br />
-                    <strong>Species:</strong> {character.species}
-                    <br />
-                    <strong>Type:</strong> {character.type}
-                    <br />
-                    <strong>Gender:</strong> {character.gender}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+                <div className='flex flex-col p-2 gap-y-2'>
+                  <p className='text-lg font-bold'>{character.name}</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-md'><b>Status:</b> {character.status || 'unknown'}</p>
+                    <p className='text-md'><b>Species:</b> {character.species || 'unknown'}</p>
+                    <p className="text-md"><b>Type:</b> {character.type || 'unknown'}</p>
+                    <p className="text-md"><b>Gender:</b> {character.gender || 'unknown'}</p>
+                  </div>
+                </div>
+              </div>
             </Link>
-          </Col>
+          </div>
         ))}
-      </Row>
-    </Container>
+      </div>
+    </div>
   )
 }
 
